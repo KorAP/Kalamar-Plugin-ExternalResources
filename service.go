@@ -68,7 +68,17 @@ func closeDB() {
 
 func setupRouter() *gin.Engine {
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
+
+	r.GET("/index", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "main.html", gin.H{
+			"title":       "External Sale Plugin",
+			"korapServer": "https://korap.ids-mannheim.de/",
+		})
+	})
+
 	r.GET("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
+	r.Static("/assets", "./assets")
 	return r
 }
 

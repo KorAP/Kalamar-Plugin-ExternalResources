@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPingRoute(t *testing.T) {
+func TestMappingRoute(t *testing.T) {
 
 	dir := t.TempDir()
 
@@ -32,4 +32,18 @@ func TestPingRoute(t *testing.T) {
 	router.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, "http://example.org", w.Body.String())
+}
+
+func TestAssetRoute(t *testing.T) {
+
+	router := setupRouter()
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodGet, "/index", nil)
+
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de/\"")
+	assert.Contains(t, w.Body.String(), "<title>External Sale Plugin</title>")
 }

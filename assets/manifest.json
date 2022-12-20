@@ -1,0 +1,17 @@
+{
+  "name" : "External Provider",
+  "desc" : "Buy content from an external provider",
+  "embed" : [{
+    "panel" : "match",
+    "title" : "Buy",
+    "classes" : ["cart"],
+    "onClick" : {
+      "action" : "addWidget",
+      "template" : "http://localhost:3003/demo/plugin-client.html",
+      "permissions": [
+        "scripts",
+        "downloads"
+      ]
+    }
+  }]
+}

@@ -2,41 +2,45 @@
 <html>
   <head>
     <title>External Provider</title>
-    <script data-server="{{ .korapServer }}" src="client.js"></script>
-    <script><!--
-"use strict";
-
-function pluginit(P) {
-
-  // Request metadata from the embedding match
-  P.requestMsg(
-    {
-      'action':'get',
-      'key':'textSigle'
-    }, function (d) {
-      var textSigle = d.value.value;
-      var xhttp = new XMLHttpRequest();
-      xhttp.onload = function() {
-        document.getElementById("buy").innerHTML = this.responseText;
-        P.resize();
-      }
-      xhttp.open("GET", textSigle, true);
-      xhttp.send();
-    }
-  );
-
-  if (window.dynCall) {
-    window.dynCall(P)
-  };
-
-  // Set plugin object globally
-  window.Plugin = P;
-
-};
--->
-    </script>
+    <script data-server="{{ .korapServer }}" src="https://korap.ids-mannheim.de/instance/test/js/korap-plugin-latest.js"></script>
   </head>
   <body>
     <p id="buy">...</p>
+    <script defer=""><!--
+      "use strict";
+      
+      function pluginit(P) {
+      
+        P.resize();
+      
+        // Request metadata from the embedding match
+        P.requestMsg(
+          {
+            'action':'get',
+            'key':'textSigle'
+          }, function (d) {
+            var textSigle = d.value.value;
+            var xhttp = new XMLHttpRequest();
+            console.log("Loading ...");
+            xhttp.onload = function() {
+              var ret = his.responseText.split(",");
+              document.getElementById("buy").innerHTML = "You can buy this text from <a href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
+              P.resize();
+            }
+            xhttp.open("GET", textSigle, true);
+            xhttp.send();
+          }
+        );
+      
+        if (window.dynCall) {
+          window.dynCall(P)
+        };
+      
+        // Set plugin object globally
+        window.Plugin = P;
+      
+      };
+      -->
+      </script>
   </body>
 </html>

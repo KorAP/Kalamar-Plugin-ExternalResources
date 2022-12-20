@@ -24,14 +24,14 @@ func TestMappingRoute(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, w.Code)
 	assert.Equal(t, "No entry found", w.Body.String())
 
-	assert.Nil(t, add("s11", "s12", "s13", "http://example.org"))
+	assert.Nil(t, add("s11", "s12", "s13", "sueddeutsche", "http://example.org"))
 
 	w = httptest.NewRecorder()
 	req, _ = http.NewRequest(http.MethodGet, "/s11/s12/s13", nil)
 
 	router.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, "http://example.org", w.Body.String())
+	assert.Equal(t, "sueddeutsche,http://example.org", w.Body.String())
 }
 
 func TestAssetRoute(t *testing.T) {

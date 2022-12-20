@@ -46,9 +46,9 @@ func CheckSaleUrl(c *gin.Context) {
 	c.String(http.StatusExpectationFailed, err.Error())
 }
 
-func add(corpusID, docID, textID string, url string) error {
+func add(corpusID, docID, textID string, provider string, url string) error {
 	err := db.Update(func(txn *badger.Txn) error {
-		err := txn.Set([]byte(corpusID+"/"+docID+"/"+textID), []byte(url))
+		err := txn.Set([]byte(corpusID+"/"+docID+"/"+textID), []byte(provider+","+url))
 		return err
 	})
 	return err
@@ -74,9 +74,9 @@ func setupRouter() *gin.Engine {
 	r.LoadHTMLGlob("templates/*")
 
 	//
-	r.GET("/index", func(c *gin.Context) {
+	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "main.html", gin.H{
-			"korapServer": "https://korap.ids-mannheim.de/",
+			"korapServer": "https://korap.ids-mannheim.de/instance/test",
 		})
 	})
 

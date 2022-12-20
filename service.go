@@ -132,5 +132,5 @@ func main() {
 		return
 	}
 	r := setupRouter()
-	r.Run(":8080")
+	log.Fatal(http.ListenAndServe(":5722", r))
 }

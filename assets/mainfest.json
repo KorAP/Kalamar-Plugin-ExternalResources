@@ -1,5 +1,5 @@
 {
-  "name" : "Externak Sale",
+  "name" : "External Provider",
   "desc" : "Buy content from an external provider",
   "embed" : [{
     "panel" : "match",
@@ -7,7 +7,11 @@
     "classes" : ["cart"],
     "onClick" : {
       "action" : "addWidget",
-      "template" : "http://localhost:3003/demo/plugin-client.html"
+      "template" : "http://localhost:3003/demo/plugin-client.html",
+      "permissions": [
+        "scripts",
+        "downloads"
+      ]
     }
   }]
 }

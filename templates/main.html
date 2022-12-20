@@ -1,9 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>External Sale</title>
     <script data-server="{{ .korapServer }}" src="client.js"></script>
-    <title>{{ .title }}</title>
+    <script><!--
+"use strict";
+
+function pluginit(P) {
+
+  // Request metadata from the embedding match
+  P.requestMsg(
+    {
+      'action':'get',
+      'key':'textSigle'
+    }, function (d) {
+      var textSigle = d.value.value;
+      var xhttp = new XMLHttpRequest();
+      xhttp.onload = function() {
+        document.getElementById("buy").innerHTML = this.responseText;
+        P.resize();
+      }
+      xhttp.open("GET", textSigle, true);
+      xhttp.send();
+    }
+  );
+
+  if (window.dynCall) {
+    window.dynCall(P)
+  };
+
+  // Set plugin object globally
+  window.Plugin = P;
+
+};
+-->
+    </script>
   </head>
   <body>
+    <p id="buy">...</p>
   </body>
 </html>

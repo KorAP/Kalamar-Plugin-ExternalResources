@@ -45,5 +45,5 @@ func TestAssetRoute(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de/\"")
-	assert.Contains(t, w.Body.String(), "<title>External Sale Plugin</title>")
+	assert.Contains(t, w.Body.String(), "<title>External Sale</title>")
 }

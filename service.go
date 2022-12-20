@@ -72,7 +72,6 @@ func setupRouter() *gin.Engine {
 
 	r.GET("/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "main.html", gin.H{
-			"title":       "External Sale Plugin",
 			"korapServer": "https://korap.ids-mannheim.de/",
 		})
 	})

@@ -1,8 +1,11 @@
 package main
 
 import (
+	"encoding/csv"
+	"io"
 	"log"
 	"net/http"
+	"os"
 
 	badger "github.com/dgraph-io/badger/v3"
 	"github.com/gin-gonic/gin"
@@ -70,6 +73,7 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 
+	//
 	r.GET("/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "main.html", gin.H{
 			"korapServer": "https://korap.ids-mannheim.de/",
@@ -83,7 +87,50 @@ func setupRouter() *gin.Engine {
 
 func main() {
 	initDB("db")
+	defer closeDB()
+
+	// Index csv file
+	if len(os.Args) > 1 {
+
+		file, err := os.Open(os.Args[1])
+		if err != nil {
+			log.Fatal(err)
+		}
+		r := csv.NewReader(file)
+
+		txn := db.NewTransaction(true)
+
+		i := 0
+
+		for {
+			record, err := r.Read()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			if err := txn.Set([]byte(record[0]), []byte(record[1]+","+record[2])); err == badger.ErrTxnTooBig {
+				log.Println("Commit", record[0], "after", i, "inserts")
+				i = 0
+				err = txn.Commit()
+				if err != nil {
+					log.Fatal("Unable to commit")
+				}
+				txn = db.NewTransaction(true)
+				_ = txn.Set([]byte(record[0]), []byte(record[1]+","+record[2]))
+			}
+			i++
+		}
+		err = txn.Commit()
+
+		if err != nil {
+			log.Fatal("Unable to commit")
+		}
+
+		return
+	}
 	r := setupRouter()
 	r.Run(":8080")
-	defer closeDB()
 }

@@ -6,7 +6,7 @@
     <script data-server="{{ .korapServer }}" src="https://korap.ids-mannheim.de/instance/test/js/korap-plugin-latest.js"></script>
   </head>
   <body>
-    <h1>External Provider</h1>
+    <h1>Full Text</h1>
     <section style="background-color: #fefefe">
       <p id="buy">...</p>
     </section>
@@ -27,10 +27,10 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onload = function() {
               if (this.status === 404) {
-                document.getElementById("buy").innerHTML = "External provider unknown."
+                document.getElementById("buy").innerHTML = "External provider unknown. No full text available."
               } else {
                 var ret = this.responseText.split(",");
-                document.getElementById("buy").innerHTML = "You can buy this text from <a target=\"_blank\" href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
+                document.getElementById("buy").innerHTML = "You can access full text from <a target=\"_blank\" href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
               }
               P.resize();
             }

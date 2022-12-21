@@ -3,7 +3,7 @@
   "desc" : "Buy content from an external provider",
   "embed" : [{
     "panel" : "match",
-    "title" : "Buy",
+    "title" : "Full Text",
     "classes" : ["cart"],
     "onClick" : {
       "action" : "addWidget",

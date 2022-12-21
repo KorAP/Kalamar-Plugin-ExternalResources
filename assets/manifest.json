@@ -7,10 +7,10 @@
     "classes" : ["cart"],
     "onClick" : {
       "action" : "addWidget",
-      "template" : "http://localhost:3003/demo/plugin-client.html",
+      "template" : "https://korap.ids-mannheim.de/instance/test/plugin/external/",
       "permissions": [
         "scripts",
-        "downloads"
+        "popups" 
       ]
     }
   }]

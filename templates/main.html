@@ -27,7 +27,7 @@
             var xhttp = new XMLHttpRequest();
             console.log("Loading ...");
             xhttp.onload = function() {
-              var ret = his.responseText.split(",");
+              var ret = this.responseText.split(",");
               document.getElementById("buy").innerHTML = "You can buy this text from <a href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
               P.resize();
             }

@@ -25,10 +25,13 @@
           }, function (d) {
             var textSigle = d.value.value;
             var xhttp = new XMLHttpRequest();
-            console.log("Loading ...");
             xhttp.onload = function() {
-              var ret = this.responseText.split(",");
-              document.getElementById("buy").innerHTML = "You can buy this text from <a href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
+              if (this.status === 404) {
+                document.getElementById("buy").innerHTML = "External provider unknown."
+              } else {
+                var ret = this.responseText.split(",");
+                document.getElementById("buy").innerHTML = "You can buy this text from <a href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
+              }
               P.resize();
             }
             xhttp.open("GET", textSigle, true);

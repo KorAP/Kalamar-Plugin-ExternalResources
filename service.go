@@ -29,6 +29,7 @@ func CheckSaleUrl(c *gin.Context) {
 
 		if err != nil {
 			c.String(http.StatusNotFound, "No entry found")
+			return nil
 		}
 
 		err = item.Value(func(v []byte) error {

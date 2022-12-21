@@ -39,11 +39,11 @@ func TestAssetRoute(t *testing.T) {
 	router := setupRouter()
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest(http.MethodGet, "/index", nil)
+	req, _ := http.NewRequest(http.MethodGet, "/", nil)
 
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de/\"")
+	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de/instance/test\"")
 	assert.Contains(t, w.Body.String(), "<title>External Provider</title>")
 }

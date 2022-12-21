@@ -19,6 +19,11 @@ func CheckSaleUrl(c *gin.Context) {
 	docID := c.Param("doc_id")
 	textID := c.Param("text_id")
 
+	/*
+		c.Header("Access-Control-Allow-Origin", "null")
+		c.Header("Access-Control-Allow-Credentials", "null")
+		c.Header("Vary", "Origin")*/
+
 	err := db.View(func(txn *badger.Txn) error {
 
 		item, err := txn.Get([]byte(corpusID + "/" + docID + "/" + textID))
@@ -75,6 +80,11 @@ func setupRouter() *gin.Engine {
 
 	//
 	r.GET("/", func(c *gin.Context) {
+		/*
+			c.Header("Access-Control-Allow-Origin", "null")
+			c.Header("Access-Control-Allow-Credentials", "null")
+			c.Header("Vary", "Origin")
+		*/
 		c.HTML(http.StatusOK, "main.html", gin.H{
 			"korapServer": "https://korap.ids-mannheim.de/instance/test",
 		})

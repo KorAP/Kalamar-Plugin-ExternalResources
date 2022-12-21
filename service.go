@@ -19,10 +19,9 @@ func CheckSaleUrl(c *gin.Context) {
 	docID := c.Param("doc_id")
 	textID := c.Param("text_id")
 
-	/*
-		c.Header("Access-Control-Allow-Origin", "null")
-		c.Header("Access-Control-Allow-Credentials", "null")
-		c.Header("Vary", "Origin")*/
+	c.Header("Access-Control-Allow-Origin", "null")
+	c.Header("Access-Control-Allow-Credentials", "null")
+	c.Header("Vary", "Origin")
 
 	err := db.View(func(txn *badger.Txn) error {
 
@@ -38,7 +37,7 @@ func CheckSaleUrl(c *gin.Context) {
 		})
 
 		if err != nil {
-			c.String(http.StatusNotFound, err.Error())
+			return err
 		}
 
 		return nil
@@ -47,8 +46,6 @@ func CheckSaleUrl(c *gin.Context) {
 	if err != nil {
 		c.String(http.StatusNotFound, err.Error())
 	}
-
-	c.String(http.StatusExpectationFailed, err.Error())
 }
 
 func add(corpusID, docID, textID string, provider string, url string) error {
@@ -80,16 +77,15 @@ func setupRouter() *gin.Engine {
 
 	//
 	r.GET("/", func(c *gin.Context) {
-		/*
-			c.Header("Access-Control-Allow-Origin", "null")
-			c.Header("Access-Control-Allow-Credentials", "null")
-			c.Header("Vary", "Origin")
-		*/
+		c.Header("Access-Control-Allow-Origin", "null")
+		c.Header("Access-Control-Allow-Credentials", "null")
+		c.Header("Vary", "Origin")
 		c.HTML(http.StatusOK, "main.html", gin.H{
 			"korapServer": "https://korap.ids-mannheim.de/instance/test",
 		})
 	})
 
+	r.HEAD("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
 	r.GET("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
 	r.Static("/assets", "./assets")
 	return r

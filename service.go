@@ -9,6 +9,7 @@ import (
 
 	badger "github.com/dgraph-io/badger/v3"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 var db *badger.DB
@@ -76,13 +77,18 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 
+	korapServer := os.Getenv("KORAP_SERVER")
+	if korapServer == "" {
+		korapServer = "https://korap.ids-mannheim.de"
+	}
+
 	//
 	r.GET("/", func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "null")
 		c.Header("Access-Control-Allow-Credentials", "null")
 		c.Header("Vary", "Origin")
 		c.HTML(http.StatusOK, "main.html", gin.H{
-			"korapServer": "https://korap.ids-mannheim.de/instance/test",
+			"korapServer": korapServer,
 		})
 	})
 
@@ -93,6 +99,8 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
+	godotenv.Load()
+
 	initDB("db")
 	defer closeDB()
 
@@ -139,5 +147,11 @@ func main() {
 		return
 	}
 	r := setupRouter()
-	log.Fatal(http.ListenAndServe(":5722", r))
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5722"
+	}
+
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }

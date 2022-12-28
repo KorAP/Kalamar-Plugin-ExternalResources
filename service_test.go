@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -47,6 +48,19 @@ func TestAssetRoute(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest(http.MethodGet, "/", nil)
+
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de\"")
+	assert.Contains(t, w.Body.String(), "<title>External Provider</title>")
+
+	os.Setenv("KORAP_SERVER", "https://korap.ids-mannheim.de/instance/test")
+
+	router = setupRouter()
+
+	w = httptest.NewRecorder()
+	req, _ = http.NewRequest(http.MethodGet, "/", nil)
 
 	router.ServeHTTP(w, req)
 

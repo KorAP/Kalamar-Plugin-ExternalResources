@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"io"
 	"log"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 	badger "github.com/dgraph-io/badger/v3"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/mattn/go-jsonpointer"
 )
 
 var db *badger.DB
@@ -78,6 +80,32 @@ func setupRouter() *gin.Engine {
 		korapServer = "https://korap.ids-mannheim.de"
 	}
 
+	var pluginManifest map[string]any
+	json.Unmarshal([]byte(`{
+		"name" : "External Provider",
+		"desc" : "Buy content from an external provider",
+		"embed" : [{
+			"panel" : "match",
+			"title" : "Full Text",
+			"classes" : ["plugin", "cart"],
+			"icon" : "\f07a",
+			"onClick" : {
+				"action" : "addWidget",
+				"template":"",
+				"permissions": [
+					"scripts",
+					"popups" 
+				]
+			}
+		}]
+	}`), &pluginManifest)
+
+	externalProvider := os.Getenv("KORAP_EXTERNAL_PROVIDER")
+	if externalProvider == "" {
+		externalProvider = "https://korap.ids-mannheim.de/plugin/external/"
+	}
+	jsonpointer.Set(pluginManifest, "/embed/0/onClick/template", externalProvider)
+
 	r.Use(func() gin.HandlerFunc {
 		return func(c *gin.Context) {
 			h := c.Writer.Header()
@@ -100,7 +128,10 @@ func setupRouter() *gin.Engine {
 	r.GET("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
 
 	// Return plugin manifest
-	r.StaticFile("/plugin.json", "./assets/plugin.json")
+	r.GET("/plugin.json", func(c *gin.Context) {
+		c.JSON(200, pluginManifest)
+	})
+
 	return r
 }
 

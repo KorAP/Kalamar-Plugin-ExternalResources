@@ -75,7 +75,7 @@ func TestWidgetRoute(t *testing.T) {
 	assert.Contains(t, w.Body.String(), "<title>External Provider</title>")
 }
 
-func TestAssetRoute(t *testing.T) {
+func TestManifestRoute(t *testing.T) {
 
 	router := setupRouter()
 
@@ -85,6 +85,22 @@ func TestAssetRoute(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, w.Header().Get("Content-Type"), "application/json")
+	assert.Contains(t, w.Header().Get("Content-Type"), "application/json")
 	assert.Contains(t, w.Body.String(), "permissions")
+	assert.Contains(t, w.Body.String(), "/plugin/external")
+
+	os.Setenv("KORAP_EXTERNAL_PROVIDER", "https://korap.ids-mannheim.de/plugin/fun")
+
+	router = setupRouter()
+
+	w = httptest.NewRecorder()
+	req, _ = http.NewRequest(http.MethodGet, "/plugin.json", nil)
+
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Contains(t, w.Header().Get("Content-Type"), "application/json")
+	assert.Contains(t, w.Body.String(), "permissions")
+	assert.Contains(t, w.Body.String(), "/plugin/fun")
+
 }

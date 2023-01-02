@@ -5,6 +5,8 @@ go 1.19
 require (
 	github.com/dgraph-io/badger/v3 v3.2103.5
 	github.com/gin-gonic/gin v1.8.1
+	github.com/joho/godotenv v1.4.0
+	github.com/mattn/go-jsonpointer v0.0.1
 	github.com/stretchr/testify v1.7.1
 )
 
@@ -25,7 +27,6 @@ require (
 	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/google/flatbuffers v1.12.1 // indirect
-	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.12.3 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect

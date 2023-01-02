@@ -54,6 +54,7 @@ or via `.env` file.
 
 - `KORAP_SERVER`: The server URL of the hosting service.
 - `PORT`: The port the service should be listen to.
+- `KORAP_EXTERNAL_PROVIDER`: The URL the service is hosted.
 
 ## License
 

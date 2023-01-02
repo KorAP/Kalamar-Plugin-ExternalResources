@@ -32,6 +32,9 @@ func TestMappingRoute(t *testing.T) {
 
 	router.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, w.Header().Get("Access-Control-Allow-Origin"), "null")
+	assert.Equal(t, w.Header().Get("Access-Control-Allow-Credentials"), "null")
+	assert.Equal(t, w.Header().Get("Vary"), "Origin")
 	assert.Equal(t, "sueddeutsche,http://example.org", w.Body.String())
 
 	w = httptest.NewRecorder()
@@ -52,6 +55,9 @@ func TestAssetRoute(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, w.Header().Get("Access-Control-Allow-Origin"), "null")
+	assert.Equal(t, w.Header().Get("Access-Control-Allow-Credentials"), "null")
+	assert.Equal(t, w.Header().Get("Vary"), "Origin")
 	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de\"")
 	assert.Contains(t, w.Body.String(), "<title>External Provider</title>")
 

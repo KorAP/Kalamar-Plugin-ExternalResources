@@ -136,7 +136,9 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
-	godotenv.Load()
+	if godotenv.Load() != nil {
+		log.Println(".env file not loaded.")
+	}
 
 	initDB("db")
 	defer closeDB()
@@ -185,7 +187,7 @@ func main() {
 	}
 	r := setupRouter()
 
-	port := os.Getenv("PORT")
+	port := os.Getenv("KORAP_EXTERNAL_PROVIDER_PORT")
 	if port == "" {
 		port = "5722"
 	}

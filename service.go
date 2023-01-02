@@ -88,16 +88,19 @@ func setupRouter() *gin.Engine {
 	}(),
 	)
 
-	//
+	// Return widget page
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "main.html", gin.H{
 			"korapServer": korapServer,
 		})
 	})
 
+	// Return provider information
 	r.HEAD("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
 	r.GET("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
-	r.Static("/assets", "./assets")
+
+	// Return plugin manifest
+	r.StaticFile("/plugin.json", "./assets/plugin.json")
 	return r
 }
 

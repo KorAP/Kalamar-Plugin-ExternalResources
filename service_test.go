@@ -45,7 +45,7 @@ func TestMappingRoute(t *testing.T) {
 	assert.Equal(t, "No entry found", w.Body.String())
 }
 
-func TestAssetRoute(t *testing.T) {
+func TestWidgetRoute(t *testing.T) {
 
 	router := setupRouter()
 
@@ -73,4 +73,18 @@ func TestAssetRoute(t *testing.T) {
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de/instance/test\"")
 	assert.Contains(t, w.Body.String(), "<title>External Provider</title>")
+}
+
+func TestAssetRoute(t *testing.T) {
+
+	router := setupRouter()
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodGet, "/plugin.json", nil)
+
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, w.Header().Get("Content-Type"), "application/json")
+	assert.Contains(t, w.Body.String(), "permissions")
 }

@@ -32,6 +32,22 @@ Registration of the plugin in Kalamar is not yet officially supported.
 Registration works by passing the JSON blob generated at `/plugin.json`
 to the plugin registration handler.
 
+## Indexation
+
+To index further data, the mappings need to be stored in a `csv`-file, like
+
+```csv
+"WPD11/A00/00001","Wikipedia","http://de.wikipedia.org/wiki/Alan_Smithee"
+"WPD11/A00/00003","Wikipedia","http://de.wikipedia.org/wiki/Actinium"
+"WPD11/A00/00005","Wikipedia","http://de.wikipedia.org/wiki/Ang_Lee"
+```
+
+Then run the indexation with:
+
+```shell
+$ ./Kalamar-Plugin-ExternalProvider data.csv
+```
+
 ## Customization
 
 The following environment variables can be set either as environment variables

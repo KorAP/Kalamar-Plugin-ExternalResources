@@ -82,8 +82,8 @@ func setupRouter() *gin.Engine {
 
 	var pluginManifest map[string]any
 	json.Unmarshal([]byte(`{
-		"name" : "External Provider",
-		"desc" : "Buy content from an external provider",
+		"name" : "External Resources",
+		"desc" : "Retrieve content from an external provider",
 		"embed" : [{
 			"panel" : "match",
 			"title" : "Full Text",
@@ -100,11 +100,11 @@ func setupRouter() *gin.Engine {
 		}]
 	}`), &pluginManifest)
 
-	externalProvider := os.Getenv("KORAP_EXTERNAL_PROVIDER")
-	if externalProvider == "" {
-		externalProvider = "https://korap.ids-mannheim.de/plugin/external/"
+	externalResources := os.Getenv("KORAP_EXTERNAL_RESOURCES")
+	if externalResources == "" {
+		externalResources = "https://korap.ids-mannheim.de/plugin/external/"
 	}
-	jsonpointer.Set(pluginManifest, "/embed/0/onClick/template", externalProvider)
+	jsonpointer.Set(pluginManifest, "/embed/0/onClick/template", externalResources)
 
 	r.Use(func() gin.HandlerFunc {
 		return func(c *gin.Context) {
@@ -123,7 +123,7 @@ func setupRouter() *gin.Engine {
 		})
 	})
 
-	// Return provider information
+	// Return resource information
 	r.HEAD("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
 	r.GET("/:corpus_id/:doc_id/:text_id", CheckSaleUrl)
 
@@ -187,7 +187,7 @@ func main() {
 	}
 	r := setupRouter()
 
-	port := os.Getenv("KORAP_EXTERNAL_PROVIDER_PORT")
+	port := os.Getenv("KORAP_EXTERNAL_RESOURCES_PORT")
 	if port == "" {
 		port = "5722"
 	}

@@ -1,4 +1,4 @@
-module github.com/KorAP/Kalamar-Plugin-ExternalSale
+module github.com/KorAP/Kalamar-Plugin-ExternalResources
 
 go 1.19
 

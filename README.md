@@ -1,12 +1,12 @@
-# Kalamar-Plugin-ExternalProvider
+# Kalamar-Plugin-Resources
 
 ## Description
 
-Kalamar-Plugin-ExternalProvider is a web service that integrates in the plugin framework of
+Kalamar-Plugin-ExternalResources is a web service that integrates in the plugin framework of
 [Kalamar](https://github.com/KorAP/Kalamar), to allow linking texts by their text sigle
 to external data providers, mainly for full text access.
 
-Kalamar-Plugin-ExternalProvider is meant to be a basic plugin and should
+Kalamar-Plugin-ExternalResources is meant to be a basic plugin and should
 demonstrate and evaluate the plugin capabilities of Kalamar.
 
 ## Prerequisites
@@ -15,11 +15,11 @@ Go 1.19 or later
 
 ## Build
 
-To build the latest version of Kalamar-Plugin-ExternalProvider, do ...
+To build the latest version of Kalamar-Plugin-ExternalResources, do ...
 
 ```shell
-$ git clone https://github.com/KorAP/Kalamar-Plugin-ExternalProvider
-$ cd Kalamar-Plugin-ExternalProvider
+$ git clone https://github.com/KorAP/Kalamar-Plugin-ExternalResources
+$ cd Kalamar-Plugin-ExternalResources
 $ go test .
 $ go build .
 ```
@@ -45,7 +45,7 @@ To index further data, the mappings need to be stored in a `csv`-file, like
 Then run the indexation with:
 
 ```shell
-$ ./Kalamar-Plugin-ExternalProvider data.csv
+$ ./Kalamar-Plugin-Resources data.csv
 ```
 
 ## Customization
@@ -54,18 +54,18 @@ The following environment variables can be set either as environment variables
 or via `.env` file.
 
 - `KORAP_SERVER`: The server URL of the hosting service.
-- `KORAP_EXTERNAL_PROVIDER_PORT`: The port the service should be listen to.
-- `KORAP_EXTERNAL_PROVIDER`: The exposed URL the service is hosted.
+- `KORAP_EXTERNAL_RESOURCES_PORT`: The port the service should be listen to.
+- `KORAP_EXTERNAL_RESOURCES`: The exposed URL the service is hosted.
 
 ## License
 
 Copyright (c) 2023, [IDS Mannheim](https://www.ids-mannheim.de/), Germany<br>
 Author: [Nils Diewald](https://www.nils-diewald.de/)
 
-Kalamar-Plugin-ExternalProvider is developed as part of the
+Kalamar-Plugin-ExternalResources is developed as part of the
 [KorAP](https://korap.ids-mannheim.de/) Corpus Analysis Platform
 at the Leibniz Institute for the German Language
 ([IDS](https://www.ids-mannheim.de/)).
 
-Kalamar-Plugin-ExternalProvider is published under the
-[BSD-2 License](https://raw.githubusercontent.com/KorAP/Kalamar-Plugin-ExternalProvider/master/LICENSE).
+Kalamar-Plugin-Resources is published under the
+[BSD-2 License](https://raw.githubusercontent.com/KorAP/Kalamar-Plugin-ExternalResources/master/LICENSE).

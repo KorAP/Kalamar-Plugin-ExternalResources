@@ -59,7 +59,7 @@ func TestWidgetRoute(t *testing.T) {
 	assert.Equal(t, w.Header().Get("Access-Control-Allow-Credentials"), "null")
 	assert.Equal(t, w.Header().Get("Vary"), "Origin")
 	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de\"")
-	assert.Contains(t, w.Body.String(), "<title>External Provider</title>")
+	assert.Contains(t, w.Body.String(), "<title>External Resources</title>")
 
 	os.Setenv("KORAP_SERVER", "https://korap.ids-mannheim.de/instance/test")
 
@@ -72,7 +72,7 @@ func TestWidgetRoute(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de/instance/test\"")
-	assert.Contains(t, w.Body.String(), "<title>External Provider</title>")
+	assert.Contains(t, w.Body.String(), "<title>External Resources</title>")
 }
 
 func TestManifestRoute(t *testing.T) {
@@ -89,7 +89,7 @@ func TestManifestRoute(t *testing.T) {
 	assert.Contains(t, w.Body.String(), "permissions")
 	assert.Contains(t, w.Body.String(), "/plugin/external")
 
-	os.Setenv("KORAP_EXTERNAL_PROVIDER", "https://korap.ids-mannheim.de/plugin/fun")
+	os.Setenv("KORAP_EXTERNAL_RESOURCES", "https://korap.ids-mannheim.de/plugin/fun")
 
 	router = setupRouter()
 

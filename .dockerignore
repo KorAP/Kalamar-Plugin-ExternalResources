@@ -1,0 +1,7 @@
+*
+!templates/main.html
+!go.mod
+!go.sum
+!service.go
+!service_test.go
+!LICENSE

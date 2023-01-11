@@ -57,6 +57,30 @@ or via `.env` file.
 - `KORAP_EXTERNAL_RESOURCES_PORT`: The port the service should be listen to.
 - `KORAP_EXTERNAL_RESOURCES`: The exposed URL the service is hosted.
 
+## Dockerization
+
+Currently no official Docker image is provided.
+To build an image based on the provided Dockerfile, run
+
+```shell
+$ docker build \
+         -f Dockerfile \
+         -t korap/kalamar-plugin-externalresources .
+```
+
+To create a container based on the image
+with a mounted database in `db`
+and a configuration file, on Linux run
+
+```shell
+$ docker run \
+         --rm \
+         --network host \
+         -v ${PWD}/db/:/db/:z \
+         -v ${PWD}/.env:/.env korap/ \
+         kalamar-plugin-externalresources
+```
+
 ## License
 
 Copyright (c) 2023, [IDS Mannheim](https://www.ids-mannheim.de/), Germany<br>
@@ -67,5 +91,5 @@ Kalamar-Plugin-ExternalResources is developed as part of the
 at the Leibniz Institute for the German Language
 ([IDS](https://www.ids-mannheim.de/)).
 
-Kalamar-Plugin-Resources is published under the
+Kalamar-Plugin-ExternalResources is published under the
 [BSD-2 License](https://raw.githubusercontent.com/KorAP/Kalamar-Plugin-ExternalResources/master/LICENSE).

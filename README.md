@@ -1,12 +1,12 @@
-# Kalamar-Plugin-Resources
+# Kalamar-Plugin-ExternalResources
 
 ## Description
 
-Kalamar-Plugin-ExternalResources is a web service that integrates in the plugin framework of
+`Kalamar-Plugin-ExternalResources` is a web service that integrates in the plugin framework of
 [Kalamar](https://github.com/KorAP/Kalamar), to allow linking texts by their text sigle
 to external data providers, mainly for full text access.
 
-Kalamar-Plugin-ExternalResources is meant to be a basic plugin and should
+`Kalamar-Plugin-ExternalResources` is meant to be a basic plugin and should
 demonstrate and evaluate the plugin capabilities of Kalamar.
 
 ## Prerequisites
@@ -15,7 +15,7 @@ Go 1.19 or later
 
 ## Build
 
-To build the latest version of Kalamar-Plugin-ExternalResources, do ...
+To build the latest version of `Kalamar-Plugin-ExternalResources`, do ...
 
 ```shell
 $ git clone https://github.com/KorAP/Kalamar-Plugin-ExternalResources
@@ -28,8 +28,8 @@ $ go build .
 
 The binary can be started without prerequisites. The `templates` folder has to be kept in the root directory.
 
-Registration of the plugin in Kalamar is not yet officially supported.
-Registration works by passing the JSON blob generated at `/plugin.json`
+Registration of the plugin in Kalamar is not yet officially supported -
+but it works by passing the JSON blob generated at `/plugin.json`
 to the plugin registration handler.
 
 ## Indexation
@@ -45,13 +45,13 @@ To index further data, the mappings need to be stored in a `csv`-file, like
 Then run the indexation with:
 
 ```shell
-$ ./Kalamar-Plugin-Resources data.csv
+$ ./Kalamar-Plugin-ExternalResources data.csv
 ```
 
 ## Customization
 
 The following environment variables can be set either as environment variables
-or via `.env` file.
+or via `.env` file in the calling directory.
 
 - `KORAP_SERVER`: The server URL of the hosting service.
 - `KORAP_EXTERNAL_RESOURCES_PORT`: The port the service should be listen to.
@@ -68,9 +68,9 @@ $ docker build \
          -t korap/kalamar-plugin-externalresources .
 ```
 
-To create a container based on the image
+To create a container on Linux based on the image
 with a mounted database in `db`
-and a configuration file, on Linux run
+and a configuration file, run
 
 ```shell
 $ docker run \

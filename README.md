@@ -9,6 +9,8 @@ to external data providers, mainly for full text access.
 `Kalamar-Plugin-ExternalResources` is meant to be a basic plugin and should
 demonstrate and evaluate the plugin capabilities of Kalamar.
 
+**This is software in an early development stage. Its behaviour may change without warnings!**
+
 ## Prerequisites
 
 Go 1.19 or later

@@ -8,6 +8,7 @@
 *.old
 .*
 db
+!/.github
 sandbox
 todo.org
 Kalamar-Plugin-ExternalResources

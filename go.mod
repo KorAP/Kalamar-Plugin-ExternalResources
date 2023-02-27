@@ -4,10 +4,10 @@ go 1.19
 
 require (
 	github.com/dgraph-io/badger/v3 v3.2103.5
-	github.com/joho/godotenv v1.5.1
 	github.com/gin-gonic/gin v1.9.0
+	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-jsonpointer v0.0.1
-	github.com/stretchr/testify v1.8.1
+	github.com/stretchr/testify v1.8.2
 )
 
 require (

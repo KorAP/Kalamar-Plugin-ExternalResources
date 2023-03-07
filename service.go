@@ -1,12 +1,14 @@
 package main
 
 import (
+	"compress/gzip"
 	"encoding/csv"
 	"encoding/json"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	badger "github.com/dgraph-io/badger/v3"
 	"github.com/gin-gonic/gin"
@@ -48,27 +50,69 @@ func CheckSaleUrl(c *gin.Context) {
 	}
 }
 
-func add(corpusID, docID, textID string, provider string, url string) error {
-	err := db.Update(func(txn *badger.Txn) error {
+func add(dbx *badger.DB, corpusID, docID, textID string, provider string, url string) error {
+	err := dbx.Update(func(txn *badger.Txn) error {
 		err := txn.Set([]byte(corpusID+"/"+docID+"/"+textID), []byte(provider+","+url))
 		return err
 	})
 	return err
 }
 
-func initDB(dir string) {
+func InitDB(dir string) {
 	if db != nil {
 		return
 	}
-	var err error
-	db, err = badger.Open(badger.DefaultOptions(dir))
+	db = initDB(dir)
+}
+
+func initDB(dir string) *badger.DB {
+	dbx, err := badger.Open(badger.DefaultOptions(dir))
 	if err != nil {
 		log.Fatal(err)
 	}
+	return dbx
 }
 
 func closeDB() {
 	db.Close()
+}
+
+func IndexDB(ri io.Reader) error {
+	return indexDB(ri, db)
+}
+
+// indexDB reads in a csv file and adds
+// information to the database
+func indexDB(ri io.Reader, dbx *badger.DB) error {
+
+	r := csv.NewReader(ri)
+
+	txn := dbx.NewTransaction(true)
+
+	i := 0
+
+	for {
+		record, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if err := txn.Set([]byte(record[0]), []byte(record[1]+","+record[2])); err == badger.ErrTxnTooBig {
+			log.Println("Commit", record[0], "after", i, "inserts")
+			i = 0
+			err = txn.Commit()
+			if err != nil {
+				log.Fatal("Unable to commit")
+			}
+			txn = db.NewTransaction(true)
+			_ = txn.Set([]byte(record[0]), []byte(record[1]+","+record[2]))
+		}
+		i++
+	}
+	return txn.Commit()
 }
 
 func setupRouter() *gin.Engine {
@@ -140,7 +184,7 @@ func main() {
 		log.Println(".env file not loaded.")
 	}
 
-	initDB("db")
+	InitDB("db")
 	defer closeDB()
 
 	// Index csv file
@@ -150,40 +194,24 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		r := csv.NewReader(file)
 
-		txn := db.NewTransaction(true)
+		fileExt := filepath.Ext(os.Args[1])
 
-		i := 0
-
-		for {
-			record, err := r.Read()
-			if err == io.EOF {
-				break
-			}
+		if fileExt == ".gz" || fileExt == ".csvz" {
+			var gzipr io.Reader
+			gzipr, err = gzip.NewReader(file)
 			if err != nil {
-				log.Fatal(err)
+				log.Fatal("Unable to open gzip file")
+			} else {
+				err = IndexDB(gzipr)
 			}
-
-			if err := txn.Set([]byte(record[0]), []byte(record[1]+","+record[2])); err == badger.ErrTxnTooBig {
-				log.Println("Commit", record[0], "after", i, "inserts")
-				i = 0
-				err = txn.Commit()
-				if err != nil {
-					log.Fatal("Unable to commit")
-				}
-				txn = db.NewTransaction(true)
-				_ = txn.Set([]byte(record[0]), []byte(record[1]+","+record[2]))
-			}
-			i++
+		} else {
+			err = IndexDB(file)
 		}
-		err = txn.Commit()
 
 		if err != nil {
 			log.Fatal("Unable to commit")
 		}
-
-		return
 	}
 	r := setupRouter()
 

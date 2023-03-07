@@ -28,7 +28,9 @@ $ go build .
 
 ## Running
 
-The binary can be started without prerequisites. The `templates` folder has to be kept in the root directory.
+The binary can be started without prerequisites.
+The `templates` folder has to be kept in the root directory.
+A `db` folder contains the database.
 
 Registration of the plugin in Kalamar is not yet officially supported -
 but it works by passing the JSON blob generated at `/plugin.json`
@@ -44,6 +46,7 @@ To index further data, the mappings need to be stored in a `csv`-file, like
 "WPD11/A00/00005","Wikipedia","http://de.wikipedia.org/wiki/Ang_Lee"
 ```
 
+These files can be gzipped as well.
 Then run the indexation with:
 
 ```shell

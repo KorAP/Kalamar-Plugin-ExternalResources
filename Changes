@@ -1,3 +1,7 @@
+0.1.0 2023-03-07
+        - Add gzip support
+        - Add indexer tests
+
 0.0.1 2023-02-23
         - Update dependencies for security reasons.
         - Add dependabot

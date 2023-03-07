@@ -1,6 +1,8 @@
 package main
 
 import (
+	"compress/gzip"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -13,7 +15,7 @@ func TestMappingRoute(t *testing.T) {
 
 	dir := t.TempDir()
 
-	initDB(dir)
+	InitDB(dir)
 	defer closeDB()
 	router := setupRouter()
 
@@ -25,7 +27,7 @@ func TestMappingRoute(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, w.Code)
 	assert.Equal(t, "No entry found", w.Body.String())
 
-	assert.Nil(t, add("s11", "s12", "s13", "sueddeutsche", "http://example.org"))
+	assert.Nil(t, add(db, "s11", "s12", "s13", "sueddeutsche", "http://example.org"))
 
 	w = httptest.NewRecorder()
 	req, _ = http.NewRequest(http.MethodGet, "/s11/s12/s13", nil)
@@ -102,5 +104,55 @@ func TestManifestRoute(t *testing.T) {
 	assert.Contains(t, w.Header().Get("Content-Type"), "application/json")
 	assert.Contains(t, w.Body.String(), "permissions")
 	assert.Contains(t, w.Body.String(), "/plugin/fun")
+}
+
+func TestIndexer(t *testing.T) {
+
+	dir := t.TempDir()
+
+	dbx := initDB(dir)
+	defer dbx.Close()
+
+	// Test index plain
+	file, err := os.Open("testdata/sz_mapping_example1.csv")
+	assert.Nil(t, err)
+	defer file.Close()
+	indexDB(file, dbx)
+
+	// Test index gzip
+	file, err = os.Open("testdata/sz_mapping_example2.csv.gz")
+	assert.Nil(t, err)
+	defer file.Close()
+	var gzipr io.Reader
+	gzipr, err = gzip.NewReader(file)
+	assert.Nil(t, err)
+	indexDB(gzipr, dbx)
+
+	txn := dbx.NewTransaction(true)
+	defer txn.Discard()
+
+	item, err := txn.Get([]byte("U92/JAN/00001"))
+	assert.Nil(t, err)
+	err = item.Value(func(val []byte) error {
+		assert.Equal(t, string(val), "S&uuml;ddeutsche Zeitung,https://archiv.szarchiv.de/Portal/restricted/Start.act?articleId=A800000")
+		return nil
+	})
+	assert.Nil(t, err)
+
+	item, err = txn.Get([]byte("U92/JAN/00003"))
+	assert.Nil(t, err)
+	err = item.Value(func(val []byte) error {
+		assert.Equal(t, string(val), "S&uuml;ddeutsche Zeitung,https://archiv.szarchiv.de/Portal/restricted/Start.act?articleId=A800010")
+		return nil
+	})
+	assert.Nil(t, err)
+
+	item, err = txn.Get([]byte("U92/FEB/00003"))
+	assert.Nil(t, err)
+	err = item.Value(func(val []byte) error {
+		assert.Equal(t, string(val), "S&uuml;ddeutsche Zeitung,https://archiv.szarchiv.de/Portal/restricted/Start.act?articleId=A806912")
+		return nil
+	})
+	assert.Nil(t, err)
 
 }

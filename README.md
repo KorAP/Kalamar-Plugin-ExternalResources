@@ -44,6 +44,7 @@ To index further data, the mappings need to be stored in a `csv`-file, like
 "WPD11/A00/00005","Wikipedia","http://de.wikipedia.org/wiki/Ang_Lee"
 ```
 
+These files can be gzipped as well.
 Then run the indexation with:
 
 ```shell

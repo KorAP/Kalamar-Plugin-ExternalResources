@@ -11,9 +11,11 @@ import (
 	"path/filepath"
 
 	badger "github.com/dgraph-io/badger/v3"
+	ginI18n "github.com/gin-contrib/i18n"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/mattn/go-jsonpointer"
+	"golang.org/x/text/language"
 )
 
 var db *badger.DB
@@ -116,7 +118,19 @@ func indexDB(ri io.Reader, dbx *badger.DB) error {
 }
 
 func setupRouter() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
+
 	r := gin.Default()
+
+	// apply i18n middleware
+	r.Use(ginI18n.Localize(ginI18n.WithBundle(&ginI18n.BundleCfg{
+		RootPath:         "./i18n",
+		AcceptLanguage:   []language.Tag{language.German, language.English},
+		DefaultLanguage:  language.English,
+		UnmarshalFunc:    json.Unmarshal,
+		FormatBundleFile: "json",
+	})))
+
 	r.LoadHTMLGlob("templates/*")
 
 	korapServer := os.Getenv("KORAP_SERVER")
@@ -163,7 +177,10 @@ func setupRouter() *gin.Engine {
 	// Return widget page
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "main.html", gin.H{
-			"korapServer": korapServer,
+			"korapServer":  korapServer,
+			"title":        ginI18n.MustGetMessage("fulltext"),
+			"noAccess":     ginI18n.MustGetMessage("noAccess"),
+			"fromProvider": ginI18n.MustGetMessage("fromProvider"),
 		})
 	})
 
@@ -180,8 +197,6 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
-
 	if godotenv.Load() != nil {
 		log.Println(".env file not loaded.")
 	}
@@ -215,6 +230,7 @@ func main() {
 			log.Fatal("Unable to commit")
 		}
 	}
+
 	r := setupRouter()
 
 	port := os.Getenv("KORAP_EXTERNAL_RESOURCES_PORT")

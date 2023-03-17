@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>External Resources</title>
+    <title>{{ .title }}</title>
     <link href="https://korap.ids-mannheim.de/css/kalamar-plugin-latest.css" type="text/css" rel="stylesheet" />
     <script data-server="{{ .korapServer }}" src="https://korap.ids-mannheim.de/js/korap-plugin-latest.js"></script>
     <style><!--
@@ -15,7 +15,7 @@
 --></style>
   </head>
   <body>
-    <h1>Full Text</h1>
+    <h1>{{ .title }}</h1>
     <section style="background-color: #fefefe">
       <p id="buy">...</p>
     </section>
@@ -36,10 +36,10 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onload = function() {
               if (this.status === 404) {
-                document.getElementById("buy").innerHTML = "External provider unknown. No full text available."
+                document.getElementById("buy").innerHTML = "{{ .noAccess }}}"
               } else {
                 var ret = this.responseText.split(",");
-                document.getElementById("buy").innerHTML = "You can access full text from <a target=\"_blank\" href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
+                document.getElementById("buy").innerHTML = "{{ .fromProvider }} <a target=\"_blank\" href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";
               }
               P.resize();
             }

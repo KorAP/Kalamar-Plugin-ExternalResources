@@ -61,7 +61,7 @@ func TestWidgetRoute(t *testing.T) {
 	assert.Equal(t, w.Header().Get("Access-Control-Allow-Credentials"), "null")
 	assert.Equal(t, w.Header().Get("Vary"), "Origin")
 	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de\"")
-	assert.Contains(t, w.Body.String(), "<title>External Resources</title>")
+	assert.Contains(t, w.Body.String(), "<title>Full Text</title>")
 
 	os.Setenv("KORAP_SERVER", "https://korap.ids-mannheim.de/instance/test")
 
@@ -74,7 +74,33 @@ func TestWidgetRoute(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Contains(t, w.Body.String(), "data-server=\"https://korap.ids-mannheim.de/instance/test\"")
-	assert.Contains(t, w.Body.String(), "<title>External Resources</title>")
+	assert.Contains(t, w.Body.String(), "<title>Full Text</title>")
+}
+
+func TestWidgetRouteI18n(t *testing.T) {
+
+	router := setupRouter()
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodGet, "/", nil)
+	req.Header.Set("Accept-Language", "de")
+
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Contains(t, w.Body.String(), "<title>Volltext</title>")
+	assert.Contains(t, w.Body.String(), "Volltext angeboten durch")
+	assert.Contains(t, w.Body.String(), "kein externer Anbieter bekannt")
+
+	req, _ = http.NewRequest(http.MethodGet, "/", nil)
+	req.Header.Set("Accept-Language", "pe")
+
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Contains(t, w.Body.String(), "<title>Full Text</title>")
+	assert.Contains(t, w.Body.String(), "Full text provided by")
+	assert.Contains(t, w.Body.String(), "External provider unknown. No access to full text available.")
 }
 
 func TestManifestRoute(t *testing.T) {

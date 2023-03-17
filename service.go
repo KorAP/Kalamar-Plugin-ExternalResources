@@ -180,6 +180,8 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
+
 	if godotenv.Load() != nil {
 		log.Println(".env file not loaded.")
 	}

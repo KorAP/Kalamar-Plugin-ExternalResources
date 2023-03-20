@@ -36,7 +36,7 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onload = function() {
               if (this.status === 404) {
-                document.getElementById("buy").innerHTML = "{{ .noAccess }}}"
+                document.getElementById("buy").innerHTML = "{{ .noAccess }}"
               } else {
                 var ret = this.responseText.split(",");
                 document.getElementById("buy").innerHTML = "{{ .fromProvider }} <a target=\"_blank\" href=\"" + ret[1] + "\" class=\"external\">" + ret[0] + "</a>.";

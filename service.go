@@ -238,5 +238,7 @@ func main() {
 		port = "5722"
 	}
 
+	log.Println("Starting server on port " + port)
+
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }

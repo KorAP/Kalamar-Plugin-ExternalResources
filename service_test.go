@@ -101,6 +101,16 @@ func TestWidgetRouteI18n(t *testing.T) {
 	assert.Contains(t, w.Body.String(), "<title>Full Text</title>")
 	assert.Contains(t, w.Body.String(), "Full text provided by")
 	assert.Contains(t, w.Body.String(), "External provider unknown. No access to full text available.")
+
+	req, _ = http.NewRequest(http.MethodGet, "/", nil)
+	req.Header.Set("Accept-Language", "de-DE;q=0.8,en-US;q=0.5,en;q=0.3")
+
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Contains(t, w.Body.String(), "<title>Volltext</title>")
+	assert.Contains(t, w.Body.String(), "Volltext angeboten durch")
+	assert.Contains(t, w.Body.String(), "kein externer Anbieter bekannt")
 }
 
 func TestManifestRoute(t *testing.T) {

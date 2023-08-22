@@ -178,9 +178,9 @@ func setupRouter() *gin.Engine {
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "main.html", gin.H{
 			"korapServer":  korapServer,
-			"title":        ginI18n.MustGetMessage("fulltext"),
-			"noAccess":     ginI18n.MustGetMessage("noAccess"),
-			"fromProvider": ginI18n.MustGetMessage("fromProvider"),
+			"title":        ginI18n.MustGetMessage(c, "fulltext"),
+			"noAccess":     ginI18n.MustGetMessage(c, "noAccess"),
+			"fromProvider": ginI18n.MustGetMessage(c, "fromProvider"),
 		})
 	})
 

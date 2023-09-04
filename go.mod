@@ -9,7 +9,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-jsonpointer v0.0.1
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/text v0.12.0
+	golang.org/x/text v0.13.0
 )
 
 require (

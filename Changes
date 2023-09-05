@@ -1,11 +1,16 @@
+0.1.2 2023-09-05
+        - Log server port
+        - Fix template
+        - Update dependencies
+
 0.1.1 2023-03-17
-        - Add font faces with absolute paths.
-        - Add i18n.
+        - Add font faces with absolute paths
+        - Add i18n
 
 0.1.0 2023-03-07
         - Add gzip support
         - Add indexer tests
 
 0.0.1 2023-02-23
-        - Update dependencies for security reasons.
+        - Update dependencies for security reasons
         - Add dependabot

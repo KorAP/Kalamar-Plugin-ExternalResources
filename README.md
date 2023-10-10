@@ -1,5 +1,7 @@
 # Kalamar-Plugin-ExternalResources
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8425526.svg)](https://doi.org/10.5281/zenodo.8425526)
+
 ## Description
 
 `Kalamar-Plugin-ExternalResources` is a web service that integrates in the plugin framework of

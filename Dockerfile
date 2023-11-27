@@ -12,7 +12,9 @@ RUN apt-get update && \
 
 RUN go test .
 
-RUN go build -o /src/kalamar-plugin-externalresources .
+RUN STATIC="-extldflags '-static'" \
+    STATICENV="CGO_ENABLED=0 GOOS=linux GOARCH=amd64" \
+    go build -o /src/kalamar-plugin-externalresources .
 
 # Main stage
 FROM busybox:glibc

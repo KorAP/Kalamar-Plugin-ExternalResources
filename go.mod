@@ -8,7 +8,7 @@ go 1.19
 
 require (
 	github.com/dgraph-io/badger/v3 v3.2103.5
-	github.com/gin-contrib/i18n v1.0.0
+	github.com/gin-contrib/i18n v1.1.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-jsonpointer v0.0.1

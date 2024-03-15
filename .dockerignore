@@ -1,7 +1,9 @@
 *
 !templates/main.html
+!i18n
 !go.mod
 !go.sum
+!testdata
 !service.go
 !service_test.go
 !LICENSE

@@ -1,3 +1,7 @@
+0.2.0 2024-03-19
+        - Indexation now doesn't mount the server
+          automatically
+
 0.1.4 2024-03-15
         - Update dependencies
         - Fix docker image

@@ -48,6 +48,8 @@ To index further data, the mappings need to be stored in a `csv`-file, like
 "WPD11/A00/00005","Wikipedia","http://de.wikipedia.org/wiki/Ang_Lee"
 ```
 
+With the first column being the textSigle (aka the document identifier),
+the second being the provider name and the third being the URL.
 These files can be gzipped as well.
 Then run the indexation with:
 
@@ -86,6 +88,19 @@ $ docker run \
          -v ${PWD}/db/:/db/:z \
          -v ${PWD}/.env:/.env korap/ \
          kalamar-plugin-externalresources
+```
+
+To index using docker, run
+
+```shell
+$ docker run \
+         --rm \
+         --network host \
+         -v ${PWD}/db/:/db/:z \
+         -v ${PWD}/data/:/data \
+         -v ${PWD}/.env:/.env \
+         korap/kalamar-plugin-externalresources \
+         data/data.csv.gz
 ```
 
 ## License

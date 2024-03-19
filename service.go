@@ -229,6 +229,8 @@ func main() {
 		if err != nil {
 			log.Fatal("Unable to commit")
 		}
+		log.Println("indexation successfull")
+		return
 	}
 
 	r := setupRouter()

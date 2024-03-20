@@ -22,10 +22,10 @@ Go 1.19 or later
 To build the latest version of `Kalamar-Plugin-ExternalResources`, do ...
 
 ```shell
-$ git clone https://github.com/KorAP/Kalamar-Plugin-ExternalResources
-$ cd Kalamar-Plugin-ExternalResources
-$ go test .
-$ go build .
+git clone https://github.com/KorAP/Kalamar-Plugin-ExternalResources
+cd Kalamar-Plugin-ExternalResources
+go test .
+go build .
 ```
 
 ## Running
@@ -54,7 +54,7 @@ These files can be gzipped as well.
 Then run the indexation with:
 
 ```shell
-$ ./Kalamar-Plugin-ExternalResources data.csv
+./Kalamar-Plugin-ExternalResources data.csv
 ```
 
 ## Customization
@@ -72,9 +72,9 @@ Currently no official Docker image is provided.
 To build an image based on the provided Dockerfile, run
 
 ```shell
-$ docker build \
-         -f Dockerfile \
-         -t korap/kalamar-plugin-externalresources .
+docker build \
+       -f Dockerfile \
+       -t korap/kalamar-plugin-externalresources .
 ```
 
 To create a container on Linux based on the image
@@ -82,30 +82,30 @@ with a mounted database in `db`
 and a configuration file, run
 
 ```shell
-$ docker run \
-         --rm \
-         --network host \
-         -v ${PWD}/db/:/db/:z \
-         -v ${PWD}/.env:/.env korap/ \
-         kalamar-plugin-externalresources
+docker run \
+       --rm \
+       --network host \
+       -v ${PWD}/db/:/db/:z \
+       -v ${PWD}/.env:/.env korap/ \
+       kalamar-plugin-externalresources
 ```
 
 To index using docker, run
 
 ```shell
-$ docker run \
-         --rm \
-         --network host \
-         -v ${PWD}/db/:/db/:z \
-         -v ${PWD}/data/:/data \
-         -v ${PWD}/.env:/.env \
-         korap/kalamar-plugin-externalresources \
-         data/data.csv.gz
+docker run \
+       --rm \
+       --network host \
+       -v ${PWD}/db/:/db/:z \
+       -v ${PWD}/data/:/data \
+       -v ${PWD}/.env:/.env \
+       korap/kalamar-plugin-externalresources \
+       data/data.csv.gz
 ```
 
 ## License
 
-Copyright (c) 2023, [IDS Mannheim](https://www.ids-mannheim.de/), Germany<br>
+Copyright (c) 2023-2024, [IDS Mannheim](https://www.ids-mannheim.de/), Germany<br>
 Author: [Nils Diewald](https://www.nils-diewald.de/)
 
 Kalamar-Plugin-ExternalResources is developed as part of the

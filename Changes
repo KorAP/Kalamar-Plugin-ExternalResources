@@ -1,3 +1,6 @@
+0.2.2 2024-11-14
+        - Don't stop on CSV parsing errors
+
 0.2.1 2024-05-02
         - Update dependencies
         - Add CITATION.cff

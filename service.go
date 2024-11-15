@@ -99,7 +99,8 @@ func indexDB(ri io.Reader, dbx *badger.DB) error {
 			break
 		}
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			continue;
 		}
 
 		if err := txn.Set([]byte(record[0]), []byte(record[1]+","+record[2])); err == badger.ErrTxnTooBig {

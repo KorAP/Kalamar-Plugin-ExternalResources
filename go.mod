@@ -1,8 +1,7 @@
 module github.com/KorAP/Kalamar-Plugin-ExternalResources
 
 go 1.21.0
-
-toolchain go1.22.6
+toolchain go1.23.7
 
 // replace github.com/golang/protobuf => google.golang.org/protobuf v1.31.0
 
@@ -15,7 +14,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-jsonpointer v0.0.1
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/text v0.21.0
+	golang.org/x/text v0.23.0
 )
 
 require (

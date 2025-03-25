@@ -68,8 +68,10 @@ or via `.env` file in the calling directory.
 
 ## Dockerization
 
-Currently no official Docker image is provided.
-To build an image based on the provided Dockerfile, run
+[Kalamar-Plugin-ExternalResources](https://hub.docker.com/r/korap/kalamar-plugin-externalresources)
+is available as a docker image on Docker Hub.
+
+To build an image yourself based on the provided Dockerfile, run
 
 ```shell
 docker build \
@@ -86,8 +88,8 @@ docker run \
        --rm \
        --network host \
        -v ${PWD}/db/:/db/:z \
-       -v ${PWD}/.env:/.env korap/ \
-       kalamar-plugin-externalresources
+       -v ${PWD}/.env:/.env \
+       korap/kalamar-plugin-externalresources
 ```
 
 To index using docker, run
@@ -105,7 +107,7 @@ docker run \
 
 ## License
 
-Copyright (c) 2023-2024, [IDS Mannheim](https://www.ids-mannheim.de/), Germany<br>
+Copyright (c) 2023-2025, [IDS Mannheim](https://www.ids-mannheim.de/), Germany<br>
 Author: [Nils Diewald](https://www.nils-diewald.de/)
 
 Kalamar-Plugin-ExternalResources is developed as part of the

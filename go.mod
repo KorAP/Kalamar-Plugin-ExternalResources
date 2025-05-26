@@ -11,7 +11,7 @@ toolchain go1.23.7
 require (
 	github.com/dgraph-io/badger/v3 v3.2103.5
 	github.com/gin-contrib/i18n v1.2.3
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-jsonpointer v0.0.1
 	github.com/stretchr/testify v1.10.0

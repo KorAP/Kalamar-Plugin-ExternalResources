@@ -1,6 +1,6 @@
 module github.com/KorAP/Kalamar-Plugin-ExternalResources
 
-go 1.24.0
+go 1.25.4
 
 // replace github.com/golang/protobuf => google.golang.org/protobuf v1.31.0
 

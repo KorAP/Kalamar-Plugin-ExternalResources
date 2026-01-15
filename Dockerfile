@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:latest as build
+FROM golang:latest AS build
 
 RUN apt-get update && \
   apt-get upgrade -y ca-certificates
@@ -7,7 +7,7 @@ RUN apt-get update && \
 WORKDIR /src
 
 COPY go.mod go.sum ./
-RUN go mod download
+RUN go get -u all
 
 COPY . /src
 
@@ -20,7 +20,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     --trimpath \
     -o /src/external-big .
 
-FROM gruebel/upx:latest as upx
+FROM gruebel/upx:latest AS upx
 
 COPY --from=build /src/external-big /external-big
 

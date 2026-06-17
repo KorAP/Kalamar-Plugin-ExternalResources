@@ -12,9 +12,9 @@ require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-jsonpointer v0.0.1
+	github.com/quic-go/quic-go v0.59.1 // indirect
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/text v0.38.0
-	github.com/quic-go/quic-go v0.59.1 // indirect
 )
 
 require (

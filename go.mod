@@ -14,7 +14,7 @@ require (
 	github.com/mattn/go-jsonpointer v0.0.1
 	github.com/quic-go/quic-go v0.60.0 // indirect
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/text v0.40.0
+	golang.org/x/text v0.41.0
 )
 
 require (

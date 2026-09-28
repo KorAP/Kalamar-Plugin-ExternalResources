@@ -1,6 +1,6 @@
 module github.com/KorAP/Kalamar-Plugin-ExternalResources
 
-go 1.25.4
+go 1.26.0
 
 // replace github.com/golang/protobuf => google.golang.org/protobuf v1.31.0
 
@@ -8,13 +8,13 @@ go 1.25.4
 
 require (
 	github.com/dgraph-io/badger/v3 v3.2103.5
-	github.com/gin-contrib/i18n v1.3.0
+	github.com/gin-contrib/i18n v1.3.2
 	github.com/gin-gonic/gin v1.12.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-jsonpointer v0.0.1
 	github.com/quic-go/quic-go v0.60.0 // indirect
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/text v0.40.0
+	golang.org/x/text v0.41.0
 )
 
 require (
@@ -43,7 +43,7 @@ require (
 	github.com/klauspost/compress v1.19.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.4.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
-	github.com/mattn/go-isatty v0.0.22 // indirect
+	github.com/mattn/go-isatty v0.0.23 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/nicksnyder/go-i18n/v2 v2.6.1 // indirect
@@ -56,7 +56,7 @@ require (
 	go.mongodb.org/mongo-driver/v2 v2.8.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/arch v0.29.0 // indirect
-	golang.org/x/crypto v0.54.0 // indirect
+	golang.org/x/crypto v0.56.0 // indirect
 	golang.org/x/net v0.57.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
